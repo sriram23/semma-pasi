@@ -1,0 +1,19 @@
+{
+  "name": "food-delivery",
+  "version": "1.0.0",
+  "description": "A simple food delivery app",
+  "main": "index.js",
+  "author": "Sriram B <sriramsubramanian23@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel index.html"
+  },
+  "dependencies": {
+    "parcel": "^2.11.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "process": "^0.11.10"
+  }
+}
