@@ -1,12 +1,15 @@
 import RestaurantCard from "./RestaurantCard";
-import {useState} from "react";
-import RES from "../../static/resList.json";
+import {useState, useEffect} from "react";
+import Shimmer from "./Shimmer";
+// import RES from "../../static/resList.json";
 RestaurantCard;
 const Body = () => {
     // State Variable - Super powerful variables
     // Hooks: A normal JS function by react. The function comes with some super power.
     // Whenever a state variable updates, React will re-render the component.
-    const [listOfRestaurants, setListOfRestaurants] = useState(RES);
+    const [listOfRestaurants, setListOfRestaurants] = useState([]);
+    const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [searchText, setSearchText] = useState("");
     // Normal Variable
 //   let listOfRestaurants = [
 //     {
@@ -124,13 +127,43 @@ const Body = () => {
 //       },
 //     },
 //   ];
+
+// Whenever state variables update, react triggers a reconciliation cycle (re-renders the component).
+console.log("Body Rendered");
+useEffect(() => {
+  fetchData();
+}, [])
+
+const fetchData = async () => {
+  const data = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.076008&lng=72.8776707&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LIST')}`)
+  // console.log('Contents: ', await data?.json())
+  const json = await data?.json();
+  console.log('Contents: ', await JSON.parse(json?.contents))
+  const contents = await JSON.parse(json?.contents)
+  // console.log(contents)
+  setListOfRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+  setFilteredRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+}
+
+if(listOfRestaurants?.length === 0) { 
+  return <Shimmer/>
+}
   return (
     <div className="body">
-      <div className="search">
-        <input type="text" placeholder="Search" />
-        <button type="submit">Search</button>
-      </div>
       <div className="filter">
+        <div className="search">
+          <input type="text" placeholder="Search" className="search-box" value={searchText} onChange={(e) => {
+            setSearchText(e.target.value);
+          }}/>
+          <button onClick={() => {
+            // Filter restaurants based on search box
+            console.log("Search: " + searchText);
+            console.log(listOfRestaurants);
+            const filteredList = listOfRestaurants.filter((res) => res.info?.name.toLowerCase().includes(searchText.toLowerCase()))
+            console.log("Filtered list: " + filteredList)
+            setFilteredRestaurants(filteredList);
+          }}>Search</button>
+        </div>
         <button
           className="filter-btn"
           onClick={() => {
@@ -144,7 +177,7 @@ const Body = () => {
         </button>
       </div>
       <div className="res-container">
-        {listOfRestaurants.map((res) => (
+        {filteredRestaurants.map((res) => (
           <RestaurantCard key={res.info.id} data={res} />
         ))}
       </div>
