@@ -136,11 +136,8 @@ useEffect(() => {
 
 const fetchData = async () => {
   const data = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.076008&lng=72.8776707&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LIST')}`)
-  // console.log('Contents: ', await data?.json())
   const json = await data?.json();
-  console.log('Contents: ', await JSON.parse(json?.contents))
   const contents = await JSON.parse(json?.contents)
-  // console.log(contents)
   setListOfRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   setFilteredRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 }
