@@ -1,15 +1,19 @@
 import RestaurantCard from "./RestaurantCard";
 import {useState, useEffect} from "react";
 import Shimmer from "./Shimmer";
+import {useNavigate} from "react-router-dom"
 // import RES from "../../static/resList.json";
 RestaurantCard;
 const Body = () => {
+    const navigate = useNavigate()
     // State Variable - Super powerful variables
     // Hooks: A normal JS function by react. The function comes with some super power.
     // Whenever a state variable updates, React will re-render the component.
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
     const [searchText, setSearchText] = useState("");
+    const [lat, setLat] = useState(0)
+    const [lon, setLon] = useState(0)
     // Normal Variable
 //   let listOfRestaurants = [
 //     {
@@ -131,18 +135,39 @@ const Body = () => {
 // Whenever state variables update, react triggers a reconciliation cycle (re-renders the component).
 console.log("Body Rendered");
 useEffect(() => {
-  fetchData();
+  fetchLocation();
 }, [])
 
+useEffect(() => {
+  fetchData();
+}, [lat, lon])
+
+useEffect(() => {
+  console.log("Data: ", JSON.stringify(listOfRestaurants))
+}, [listOfRestaurants])
+
+const fetchLocation = () => {
+  if(!navigator.geolocation) {
+    setLat(-1)
+    setLon(-1)
+  } else {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLat(position.coords.latitude)
+      setLon(position.coords.longitude)
+    })
+  }
+}
+
 const fetchData = async () => {
-  const data = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.076008&lng=72.8776707&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LIST')}`)
+  // const data = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('https://www.swiggy.com/dapi/restaurants/list/v5?lat=19.076008&lng=72.8776707&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LIST')}`)
+  const data = await fetch(`https://foodfire.onrender.com/api/restaurants/?lat=${lat}&lng=${lon}&page_type=DESKTOP_WEB_LISTING`)
   const json = await data?.json();
-  const contents = await JSON.parse(json?.contents)
+  const contents = json// && await JSON.parse(json)
   setListOfRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   setFilteredRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
 }
 
-if(listOfRestaurants?.length === 0) { 
+if(!listOfRestaurants || listOfRestaurants?.length === 0) { 
   return <Shimmer/>
 }
   return (
@@ -174,8 +199,8 @@ if(listOfRestaurants?.length === 0) {
         </button>
       </div>
       <div className="res-container">
-        {filteredRestaurants.map((res) => (
-          <RestaurantCard key={res.info.id} data={res} />
+        {filteredRestaurants?.map((res) => (
+          <RestaurantCard onCardClick={() => {navigate('/restaurants/'+res.info.id, {state: {lat, lon}})}} key={res.info.id} data={res} />
         ))}
       </div>
     </div>

@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import About from "./src/components/About";
 import Contact from "./src/components/Contact";
 import Error from "./src/components/Error";
+import RestaurantMenu from "./src/components/RestaurantMenu";
 
 
 /**
@@ -41,6 +42,12 @@ const AppLayout = () => {
     )
 }
 
+{/**
+There are two types of routings:
+- Client side routing - We are not making any network requests. It just loads the components.
+- Server side routing - Reloads the page, make a network request to fetch the page contents.
+*/}
+
 const appRouter = createBrowserRouter([
     {
         path: "/",
@@ -58,6 +65,10 @@ const appRouter = createBrowserRouter([
             {
                 path: "/contact",
                 element: <Contact/>
+            },
+            {
+                path: "/restaurants/:resId",
+                element: <RestaurantMenu/>
             }
         ]
     },
