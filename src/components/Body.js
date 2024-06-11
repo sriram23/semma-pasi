@@ -142,9 +142,6 @@ useEffect(() => {
   fetchData();
 }, [lat, lon])
 
-useEffect(() => {
-  console.log("Data: ", JSON.stringify(listOfRestaurants))
-}, [listOfRestaurants])
 
 const fetchLocation = () => {
   if(!navigator.geolocation) {
