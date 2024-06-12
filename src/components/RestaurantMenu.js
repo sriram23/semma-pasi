@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { useLocation, useParams } from "react-router-dom"
 import Shimmer from "./Shimmer";
+import MenuCard from "./MenuCard";
 
 const RestaurantMenu = () => {
     const {resId} = useParams();
@@ -45,10 +46,10 @@ const RestaurantMenu = () => {
                         {cards?.card?.card?.nonvegFilter && <li>{cards?.card?.card?.nonvegFilter?.attributes?.displayText}</li>}
                         {cards?.card?.card?.topRatedFilter && <li>{cards?.card?.card?.topRatedFilter?.attributes?.displayText}</li>}
                         {cards?.card?.card?.vegFilter && <li>{cards?.card?.card?.vegFilter?.attributes?.displayText}</li>}
-                        <h2>{cards?.card?.card?.title}</h2>
+                        {cards?.card?.card?.title && <h2>{cards?.card?.card?.title}({cards?.card?.card?.itemCards?.length})</h2>}
                         <ul>
                             {cards?.card?.card?.itemCards?.map(items => (
-                                <li>{items?.card?.info?.name} - {items?.card?.info?.price/100} - Rating: {items?.card?.info?.ratings?.aggregatedRating?.rating}</li>
+                                <MenuCard items={items} />
                             ))}
                         </ul>
 
