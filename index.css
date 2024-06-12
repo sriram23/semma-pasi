@@ -28,16 +28,22 @@
 }
 .res-card {
     width: 200px;
-    height: 400px;
     padding: 5px;
     margin: 5px;
+    overflow: hidden;
 }
 .res-card:hover {
-    border: 1px solid black;
     cursor: pointer;
+    background-color: #e0e0e0 !important;
+}
+.res-card:hover .res-logo {
+    scale: 1.1;
 }
 .res-logo {
     width: 100%;
+    height: 200px;
+    object-fit: cover;
+    transition: scale 1s ease;
 }
 .shimmer-container {
     display: flex;

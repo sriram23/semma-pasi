@@ -9,8 +9,11 @@ const Body = () => {
     // State Variable - Super powerful variables
     // Hooks: A normal JS function by react. The function comes with some super power.
     // Whenever a state variable updates, React will re-render the component.
+    const [listOfRestaurantTitle, setListOfRestaurantTitle] = useState("")
     const [listOfRestaurants, setListOfRestaurants] = useState([]);
     const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+    const [topRestaurantTitle, setTopRestaurantTitle] = useState("");
+    const [topRestaurants, setTopRestaurants] = useState([])
     const [searchText, setSearchText] = useState("");
     const [lat, setLat] = useState(0)
     const [lon, setLon] = useState(0)
@@ -160,8 +163,19 @@ const fetchData = async () => {
   const data = await fetch(`https://foodfire.onrender.com/api/restaurants/?lat=${lat}&lng=${lon}&page_type=DESKTOP_WEB_LISTING`)
   const json = await data?.json();
   const contents = json// && await JSON.parse(json)
+  console.log("Data: " + JSON.stringify(contents))
+  sessionStorage.setItem("city", contents?.data?.cards[11]?.card?.card?.citySlug)
+  setTopRestaurantTitle(contents?.data?.cards[1]?.card?.card?.header?.title)
+  setTopRestaurants(contents?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+  setListOfRestaurantTitle(contents?.data?.cards[2]?.card?.card?.title)
   setListOfRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   setFilteredRestaurants(contents?.data?.cards[4]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+  // TODO: Look into the filter logic
+  // const combainedRestaurants =[...topRestaurants, ...listOfRestaurants]
+  // const uniqueRestaurants = combainedRestaurants.filter((obj, index, self) => index === self.findIndex(o => o.id === obj.id))
+  // console.log("Unique Restaurants: ", uniqueRestaurants)
+  // console.log("Top Restaurants", topRestaurants)
+  // console.log("List of restaurants", listOfRestaurants)
 }
 
 if(!listOfRestaurants || listOfRestaurants?.length === 0) { 
@@ -195,10 +209,23 @@ if(!listOfRestaurants || listOfRestaurants?.length === 0) {
           Top Rated Restaurants
         </button>
       </div>
-      <div className="res-container">
-        {filteredRestaurants?.map((res) => (
-          <RestaurantCard onCardClick={() => {navigate('/restaurants/'+res.info.id, {state: {lat, lon}})}} key={res.info.id} data={res} />
-        ))}
+      <div>
+        <h2>{topRestaurantTitle}</h2>
+        <div className="res-container">
+        {
+          topRestaurants.map((res) =>(
+            <RestaurantCard onCardClick={() => {navigate('/restaurants/'+res.info.id, {state: {lat, lon}})}} key={res.info.id} data={res} />  
+          ))
+        }
+        </div>
+      </div>
+      <div>
+        <h2>{listOfRestaurantTitle}</h2>
+        <div className="res-container">
+          {filteredRestaurants?.map((res) => (
+            <RestaurantCard onCardClick={() => {navigate('/restaurants/'+res.info.id, {state: {lat, lon}})}} key={res.info.id} data={res} />
+          ))}
+        </div>
       </div>
     </div>
   );
