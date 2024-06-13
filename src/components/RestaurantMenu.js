@@ -46,7 +46,17 @@ const RestaurantMenu = () => {
                         {cards?.card?.card?.nonvegFilter && <li>{cards?.card?.card?.nonvegFilter?.attributes?.displayText}</li>}
                         {cards?.card?.card?.topRatedFilter && <li>{cards?.card?.card?.topRatedFilter?.attributes?.displayText}</li>}
                         {cards?.card?.card?.vegFilter && <li>{cards?.card?.card?.vegFilter?.attributes?.displayText}</li>}
-                        {cards?.card?.card?.title && <h2>{cards?.card?.card?.title}({cards?.card?.card?.itemCards?.length})</h2>}
+                        {cards?.card?.card?.title && <h2>{cards?.card?.card?.title}{cards?.card?.card?.itemCards && '('+cards?.card?.card?.itemCards?.length+')'}</h2>}
+                        {cards?.card?.card?.categories && cards?.card?.card?.categories?.map(category => (
+                            <div>
+                                <h3>{category?.title} ({category?.itemCards?.length})</h3>
+                                <ul>
+                                    {category?.itemCards?.map(items => (
+                                        <MenuCard items={items} />        
+                                    ))}
+                                </ul>
+                            </div>
+                        ))}
                         <ul>
                             {cards?.card?.card?.itemCards?.map(items => (
                                 <MenuCard items={items} />
