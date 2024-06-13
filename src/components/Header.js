@@ -2,17 +2,23 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 const Header = () => {
     const  [btnName, setBtnName] = useState("Login");
-    const [city, setCity] = useState("");
+    const [city, setCity] = useState(sessionStorage.getItem("city") !== "undefined"? sessionStorage.getItem("city") : "Unable to fetch location");
     useEffect(() => {
-        const cityString = sessionStorage.getItem("city")
-        setCity(cityString.charAt(0).toUpperCase() + cityString.slice(1))
-    }, [sessionStorage.getItem('city')])
+        const setCurrentCity = () => {
+            const cityString = sessionStorage.getItem("city")
+            setCity(cityString !== "undefined" ? cityString : "Unable to fetch location")
+        }
+        window.addEventListener("storage", setCurrentCity)
+        return () => {
+            window.removeEventListener("storage", setCurrentCity)
+        }
+    },[])
     return (
         <div className="header">
             <div className="logo-container">
                 <img className="logo" src="https://i.pinimg.com/originals/4e/95/ff/4e95ff2406e7914e70cbbba6dd9c51d2.jpg" alt="logo" />
                 <div style={{padding: "1rem"}}>
-                    Location: {city || 'Unable to find your location'}
+                    Location: {city.charAt(0).toUpperCase()+city.slice(1)}
                 </div>
             </div>
             <div className="nav-items">

@@ -165,6 +165,7 @@ const fetchData = async () => {
   const contents = json// && await JSON.parse(json)
   console.log("Data: " + JSON.stringify(contents))
   sessionStorage.setItem("city", contents?.data?.cards[11]?.card?.card?.citySlug)
+  window.dispatchEvent(new Event("storage"));
   setTopRestaurantTitle(contents?.data?.cards[1]?.card?.card?.header?.title)
   setTopRestaurants(contents?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
   setListOfRestaurantTitle(contents?.data?.cards[2]?.card?.card?.title)
