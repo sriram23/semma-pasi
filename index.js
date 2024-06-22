@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
 import Header from "./src/components/Header";
 import Body from "./src/components/Body";
@@ -75,4 +76,4 @@ const appRouter = createBrowserRouter([
 ])
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<RouterProvider router={appRouter}/>);
+root.render(<ChakraProvider><RouterProvider router={appRouter}/></ChakraProvider>);

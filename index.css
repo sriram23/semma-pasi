@@ -1,7 +1,18 @@
+* {
+    font-family: "Fira Sans";
+    margin: unset;
+    padding: unset;
+}
+
+body {
+    background: #d8d4c5;
+}
 .header {
     display: flex;
     justify-content: space-between;
-    border: 1px solid black;
+    background: #cbb594;
+    position: sticky;
+    top: 0;
 }
 .logo {
     width: 100px;

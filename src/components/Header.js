@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import LOGO from "../../static/assets/SemmaPasi_logo.jpeg"
 const Header = () => {
     const  [btnName, setBtnName] = useState("Login");
     const [city, setCity] = useState(sessionStorage.getItem("city") !== "undefined"? sessionStorage.getItem("city") : "Unable to fetch location");
@@ -16,9 +17,9 @@ const Header = () => {
     return (
         <div className="header">
             <div className="logo-container">
-                <img className="logo" src="https://i.pinimg.com/originals/4e/95/ff/4e95ff2406e7914e70cbbba6dd9c51d2.jpg" alt="logo" />
+                <img className="logo" src={LOGO} alt="Semma Pasi Logo" />
                 <div style={{padding: "1rem"}}>
-                    Location: {city.charAt(0).toUpperCase()+city.slice(1)}
+                    Location: {city?.charAt(0).toUpperCase()+city?.slice(1)}
                 </div>
             </div>
             <div className="nav-items">
