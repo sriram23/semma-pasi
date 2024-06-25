@@ -1,37 +1,69 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import LOGO from "../../static/assets/SemmaPasi_logo.jpeg"
+import { Link as RouterLink } from "react-router-dom";
+import { Box, Flex, Image, Text, Button, Link, List, ListItem } from "@chakra-ui/react";
+import LOGO from "../../static/assets/SemmaPasi_logo.jpeg";
+
 const Header = () => {
-    const  [btnName, setBtnName] = useState("Login");
-    const [city, setCity] = useState(sessionStorage.getItem("city") !== "undefined"? sessionStorage.getItem("city") : "Unable to fetch location");
-    useEffect(() => {
-        const setCurrentCity = () => {
-            const cityString = sessionStorage.getItem("city")
-            setCity(cityString !== "undefined" ? cityString : "Unable to fetch location")
-        }
-        window.addEventListener("storage", setCurrentCity)
-        return () => {
-            window.removeEventListener("storage", setCurrentCity)
-        }
-    },[])
-    return (
-        <div className="header">
-            <div className="logo-container">
-                <img className="logo" src={LOGO} alt="Semma Pasi Logo" />
-                <div style={{padding: "1rem"}}>
-                    Location: {city?.charAt(0).toUpperCase()+city?.slice(1)}
-                </div>
-            </div>
-            <div className="nav-items">
-                <ul>
-                    <li><Link to={'/'}>Home</Link></li>
-                    <li><Link to={'/about'}>About Us</Link></li>
-                    <li><Link to={'/contact'}>Contact Us</Link></li>
-                    <li>Cart</li>
-                    <button onClick={() => setBtnName(btnName === "Logout"? "Login" : "Logout")} className="login">{btnName}</button>
-                </ul>
-            </div>
-        </div>
-    )
-}
-export default Header
+  const [btnName, setBtnName] = useState("Login");
+  const [city, setCity] = useState(
+    sessionStorage.getItem("city") !== "undefined"
+      ? sessionStorage.getItem("city")
+      : "Unable to fetch location"
+  );
+
+  useEffect(() => {
+    const setCurrentCity = () => {
+      const cityString = sessionStorage.getItem("city");
+      setCity(cityString !== "undefined" ? cityString : "Unable to fetch location");
+    };
+    window.addEventListener("storage", setCurrentCity);
+    return () => {
+      window.removeEventListener("storage", setCurrentCity);
+    };
+  }, []);
+
+  return (
+    <Flex as="header" p={4} justify="space-between" align="center" bg="gray.100" position="sticky"
+    top="0"
+    zIndex="1000">
+      <Flex align="center">
+        <Image boxSize="100px" src={LOGO} alt="Semma Pasi Logo" />
+        <Text ml={4} fontSize="lg" fontWeight="bold">
+          Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
+        </Text>
+      </Flex>
+      <Flex>
+        <List display="flex" alignItems="center">
+          <ListItem m={2}>
+            <Link as={RouterLink} to="/" fontSize="lg" fontWeight="bold">
+              Home
+            </Link>
+          </ListItem>
+          <ListItem m={2}>
+            <Link as={RouterLink} to="/about" fontSize="lg" fontWeight="bold">
+              About Us
+            </Link>
+          </ListItem>
+          <ListItem m={2}>
+            <Link as={RouterLink} to="/contact" fontSize="lg" fontWeight="bold">
+              Contact Us
+            </Link>
+          </ListItem>
+          <ListItem m={2} fontSize="lg" fontWeight="bold">
+            Cart
+          </ListItem>
+          <ListItem m={2}>
+            <Button
+              onClick={() => setBtnName(btnName === "Logout" ? "Login" : "Logout")}
+              colorScheme="teal"
+            >
+              {btnName}
+            </Button>
+          </ListItem>
+        </List>
+      </Flex>
+    </Flex>
+  );
+};
+
+export default Header;

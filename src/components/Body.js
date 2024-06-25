@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Shimmer from "./Shimmer";
 import { useNavigate } from "react-router-dom";
 import SERVICE_UNAVAILABLE from "../../static/assets/Service_unavailable.jpeg";
+import { Box, Flex, Grid, Input, Button, Image, Text, useBreakpointValue } from "@chakra-ui/react";
 // import RES from "../../static/resList.json";
 RestaurantCard;
 const Body = () => {
@@ -213,107 +214,83 @@ const Body = () => {
     return <Shimmer />;
   }
   return (
-    <div className="body">
-      <div className="filter">
-        <div className="search">
-          <input
+    <Box p={4}>
+      <Flex mb={4} direction={{ base: "column", md: "row" }} justify="space-between" align="center">
+        <Flex mb={{ base: 4, md: 0 }} align="center">
+          <Input
             type="text"
             placeholder="Search"
-            className="search-box"
             value={searchText}
-            onChange={(e) => {
-              setSearchText(e.target.value);
-            }}
+            onChange={(e) => setSearchText(e.target.value)}
+            mr={2}
           />
-          <button
+          <Button
             onClick={() => {
-              // Filter restaurants based on search box
-              console.log("Search: " + searchText);
-              console.log(listOfRestaurants);
               const filteredList = listOfRestaurants.filter((res) =>
-                res.info?.name.toLowerCase().includes(searchText.toLowerCase())
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
               );
-              console.log("Filtered list: " + filteredList);
               setFilteredRestaurants(filteredList);
             }}
           >
             Search
-          </button>
-        </div>
-        <button
-          className="filter-btn"
+          </Button>
+        </Flex>
+        <Button
           onClick={() => {
-            // Filter logic here
-            const filteredList = listOfRestaurants.filter(
-              (res) => res.info.avgRating > 4.3
-            );
+            const filteredList = listOfRestaurants.filter((res) => res.info.avgRating > 4.3);
             setListOfRestaurants(filteredList);
-            console.log(listOfRestaurants);
           }}
         >
           Top Rated Restaurants
-        </button>
-      </div>
+        </Button>
+      </Flex>
+
       {!serviceAvailable && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <figure style={{ maxWidth: "30rem" }}>
-            <img
-              style={{ width: "100%" }}
-              src={SERVICE_UNAVAILABLE}
-              alt="Service unavailable"
-            />
-          </figure>
-          <h2>
+        <Flex direction="column" align="center" justify="center">
+          <Box maxW="30rem">
+            <Image src={SERVICE_UNAVAILABLE} alt="Service unavailable" w="100%" />
+          </Box>
+          <Text textAlign="center" mt={4}>
             Our hunger-busting spices haven't reached your corner just yet!
-            We're working on expanding our delivery zone, so stay tuned for
-            delicious updates.
-          </h2>
-        </div>
+            We're working on expanding our delivery zone, so stay tuned for delicious updates.
+          </Text>
+        </Flex>
       )}
+
       {serviceAvailable && (
-        <div>
-          <div>
-            <h2>{topRestaurantTitle}</h2>
-            <div className="res-container">
+        <Box>
+          <Box mb={4}>
+            <Text fontSize="2xl" fontWeight="bold">{topRestaurantTitle}</Text>
+            <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl:"repeat(5, 1fr)" }} gap={4} justifyContent="center" alignItems="center">
               {topRestaurants.map((res) => (
                 <RestaurantCard
                   onCardClick={() => {
-                    navigate("/restaurants/" + res.info.id, {
-                      state: { lat, lon },
-                    });
+                    navigate("/restaurants/" + res.info.id, { state: { lat, lon } });
                   }}
                   key={res.info.id}
                   data={res}
                 />
               ))}
-            </div>
-          </div>
-          <div>
-            <h2>{listOfRestaurantTitle}</h2>
-            <div className="res-container">
-              {filteredRestaurants?.map((res) => (
+            </Grid>
+          </Box>
+
+          <Box>
+            <Text fontSize="2xl" fontWeight="bold">{listOfRestaurantTitle}</Text>
+            <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl:"repeat(5, 1fr)" }} gap={4} justifyContent="center" alignItems="center">
+              {filteredRestaurants.map((res) => (
                 <RestaurantCard
                   onCardClick={() => {
-                    navigate("/restaurants/" + res.info.id, {
-                      state: { lat, lon },
-                    });
+                    navigate("/restaurants/" + res.info.id, { state: { lat, lon } });
                   }}
                   key={res.info.id}
                   data={res}
                 />
               ))}
-            </div>
-          </div>
-        </div>
+            </Grid>
+          </Box>
+        </Box>
       )}
-    </div>
+    </Box>
   );
 };
 export default Body;
