@@ -213,6 +213,22 @@ const Body = () => {
   ) {
     return <Shimmer />;
   }
+
+  const renderResCard = (data) => (
+    <Grid justifyContent={"center"} gap={4} templateColumns={{ base: "1fr", sm: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl:"repeat(5, 1fr)" }}>
+    {data.map((res) => (
+      <Box display={"flex"} width="100%" justifyContent={"center"}>
+        <RestaurantCard
+          onCardClick={() => {
+            navigate("/restaurants/" + res.info.id, { state: { lat, lon } });
+          }}
+          key={res.info.id}
+          data={res}
+        />
+      </Box>
+    ))}
+    </Grid>
+  )
   return (
     <Box p={4}>
       <Flex mb={4} direction={{ base: "column", md: "row" }} justify="space-between" align="center">
@@ -261,32 +277,12 @@ const Body = () => {
         <Box>
           <Box mb={4}>
             <Text fontSize="2xl" fontWeight="bold">{topRestaurantTitle}</Text>
-            <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl:"repeat(5, 1fr)" }} gap={4} justifyContent="center" alignItems="center">
-              {topRestaurants.map((res) => (
-                <RestaurantCard
-                  onCardClick={() => {
-                    navigate("/restaurants/" + res.info.id, { state: { lat, lon } });
-                  }}
-                  key={res.info.id}
-                  data={res}
-                />
-              ))}
-            </Grid>
+            {renderResCard(topRestaurants)}
           </Box>
 
           <Box>
             <Text fontSize="2xl" fontWeight="bold">{listOfRestaurantTitle}</Text>
-            <Grid templateColumns={{ base: "1fr", sm: "1fr 1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl:"repeat(5, 1fr)" }} gap={4} justifyContent="center" alignItems="center">
-              {filteredRestaurants.map((res) => (
-                <RestaurantCard
-                  onCardClick={() => {
-                    navigate("/restaurants/" + res.info.id, { state: { lat, lon } });
-                  }}
-                  key={res.info.id}
-                  data={res}
-                />
-              ))}
-            </Grid>
+            {renderResCard(filteredRestaurants)}
           </Box>
         </Box>
       )}
