@@ -21,7 +21,7 @@ const MenuCard = ({ items }) => {
             {info?.name}
           </Heading>
           <Text m="1rem" fontWeight="bold">
-            ₹{info?.price / 100}
+            {info?.price && "₹"+ info?.price / 100}
           </Text>
           {info?.ratings?.aggregatedRating?.rating && (
             <Text m="1rem">
@@ -30,7 +30,7 @@ const MenuCard = ({ items }) => {
             </Text>
           )}
         </Flex>
-        <Text>{info?.description}</Text>
+        <Text isTruncated>{info?.description}</Text>
       </Flex>
 
       <Box
