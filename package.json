@@ -2,11 +2,11 @@
   "name": "food-delivery",
   "version": "1.0.0",
   "description": "A simple food delivery app",
-  "main": "index.js",
   "author": "Sriram B <sriramsubramanian23@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html"
+    "start": "parcel index.html",
+    "build": "parcel build index.html"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.1.1",
