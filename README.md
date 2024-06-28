@@ -51,7 +51,7 @@ To start using **Semma Pasi**, follow these instructions:
 
 2. **Open your browser and go to:**
 
-   http://localhost:3000
+   http://localhost:1234
 
 3. **Explore the features:**
 
