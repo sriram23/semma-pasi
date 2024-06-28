@@ -19,7 +19,7 @@ import {
   Card,
   CardBody
 } from "@chakra-ui/react";
-import Shimmer from "./Shimmer";
+import ShimmerMenu from "./ShimmerMenu";
 import MenuCard from "./MenuCard";
 
 import STAR from "../../static/assets/gold_star.png"
@@ -42,7 +42,7 @@ const RestaurantMenu = () => {
     setResData(json);
   };
 
-  if (resData === null) return <Shimmer />;
+  if (resData === null) return <ShimmerMenu />;
   return (
     <div className="menu">
       <Heading as="h2" size="xl" noOfLines={1}>{resData?.data?.cards[0]?.card?.card?.text}</Heading>

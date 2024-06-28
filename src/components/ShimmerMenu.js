@@ -5,13 +5,13 @@ const shimmerAnimation = keyframes`
   100% { background-position: 500px 0; }
 `;
 
-const Shimmer = () => {
+const ShimmerMenu = () => {
   return (
     <div>
       <Flex justifyContent="center" alignItems="center">
         <Box
-          width="95%"
-          height={100}
+          width="100%"
+          height={500}
           bgGradient="linear(to-r, gray.200 0%, gray.300 50%, gray.200 100%)"
           m={2}
           bgSize="200% 100%"
@@ -19,23 +19,12 @@ const Shimmer = () => {
           borderRadius="md"
         ></Box>
       </Flex>
-      <Grid
-        justifyContent={"center"}
-        gap={4}
-        templateColumns={{
-          base: "1fr",
-          sm: "1fr",
-          md: "repeat(3, 1fr)",
-          lg: "repeat(4, 1fr)",
-          xl: "repeat(5, 1fr)",
-        }}
-      >
         {Array.from({ length: 30 }).map((_, index) => (
           <Box display={"flex"} width="100%" justifyContent={"center"}>
             <Box
               key={index}
-              w="200px"
-              h="300px"
+              w="100%"
+              h="250px"
               m={2}
               bgGradient="linear(to-r, gray.200 0%, gray.300 50%, gray.200 100%)"
               bgSize="200% 100%"
@@ -44,9 +33,8 @@ const Shimmer = () => {
             />
           </Box>
         ))}
-      </Grid>
     </div>
   );
 };
 
-export default Shimmer;
+export default ShimmerMenu;
