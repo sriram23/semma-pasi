@@ -17,8 +17,8 @@ const Body = () => {
   const [topRestaurantTitle, setTopRestaurantTitle] = useState("");
   const [topRestaurants, setTopRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
-  const [lat, setLat] = useState(-1);
-  const [lon, setLon] = useState(-1);
+  const [lat, setLat] = useState(0);
+  const [lon, setLon] = useState(0);
   const [serviceAvailable, setServiceAvailable] = useState(true);
   // Normal Variable
   //   let listOfRestaurants = [
@@ -141,7 +141,16 @@ const Body = () => {
   // Whenever state variables update, react triggers a reconciliation cycle (re-renders the component).
   console.log("Body Rendered");
   useEffect(() => {
-    fetchLocation();
+    if(localStorage.getItem('lat') && localStorage.getItem('lon')) {
+      setLat(localStorage.getItem('lat'))
+      setLon(localStorage.getItem('lon'))
+    } else {
+      fetchLocation();
+    }
+    document.addEventListener('fetchLocation', fetchLocation)
+    return () => {
+      document.removeEventListener('fetchLocation', fetchLocation)
+    }
   }, []);
 
   useEffect(() => {
@@ -156,6 +165,8 @@ const Body = () => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLon(position.coords.longitude);
+        localStorage.setItem('lat', position.coords.latitude);
+        localStorage.setItem('lon', position.coords.longitude);
       });
     }
   };
@@ -173,7 +184,7 @@ const Body = () => {
       const json = await data?.json();
       const contents = json;
       console.log("Data: " + JSON.stringify(contents));
-      sessionStorage.setItem(
+      localStorage.setItem(
         "city",
         contents?.data?.cards[11]?.card?.card?.citySlug
       );

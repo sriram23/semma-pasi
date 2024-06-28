@@ -14,22 +14,23 @@ import {
   useDisclosure,
   useMediaQuery
 } from "@chakra-ui/react";
+import {RepeatIcon} from "@chakra-ui/icons"
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import LOGO from "../../static/assets/SemmaPasi_logo.jpeg";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
   const [city, setCity] = useState(
-    sessionStorage.getItem("city") !== "undefined"
-      ? sessionStorage.getItem("city")
-      : "Unable to fetch location"
+    localStorage.getItem("city") !== "undefined"
+      ? localStorage.getItem("city")
+      : "Fetching your location..."
   );
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
 
   useEffect(() => {
     const setCurrentCity = () => {
-      const cityString = sessionStorage.getItem("city");
+      const cityString = localStorage.getItem("city");
       setCity(cityString !== "undefined" ? cityString : "Unable to fetch location");
     };
     window.addEventListener("storage", setCurrentCity);
@@ -37,6 +38,11 @@ const Header = () => {
       window.removeEventListener("storage", setCurrentCity);
     };
   }, []);
+
+  const handleFetchLocation = () => {
+    const event = new CustomEvent("fetchLocation")
+    document.dispatchEvent(event);
+  }
 
   const getNavItems = () => (
     <List display="flex" alignItems="center" flexDirection={{base: "column", md: "row"}}>
@@ -78,6 +84,7 @@ const Header = () => {
         <Text ml={4} fontSize="lg" fontWeight="bold">
           Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
         </Text>
+        <RepeatIcon ml={2} onClick={handleFetchLocation}></RepeatIcon>
       </Flex>
       <Flex>
         {isLargerThanMD ? getNavItems() : (
