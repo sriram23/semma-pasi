@@ -158,7 +158,7 @@ const Body = () => {
   }, [lat, lon]);
 
   const fetchLocation = () => {
-    if (!navigator.geolocation) {
+    if (!Object.keys(navigator.geolocation).length) {
       setLat(-1);
       setLon(-1);
     } else {
