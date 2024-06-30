@@ -275,7 +275,7 @@ const Body = () => {
       {!serviceAvailable && (
         <Flex direction="column" align="center" justify="center">
           <Box maxW="30rem">
-            <Image src={SERVICE_UNAVAILABLE} alt="Service unavailable" w="100%" />
+            <Image src={SERVICE_UNAVAILABLE} w={100} h={100} alt="Service unavailable" />
           </Box>
           <Text textAlign="center" mt={4}>
             Our hunger-busting spices haven't reached your corner just yet!
