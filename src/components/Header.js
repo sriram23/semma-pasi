@@ -80,7 +80,7 @@ const Header = () => {
     top="0"
     zIndex="1000">
       <Flex align="center">
-        <Image boxSize="100px" w={25} h={25} src={LOGO} alt="Semma Pasi Logo" loading="lazy" />
+        <Image boxSize="100px" w={100} h={100} src={LOGO} alt="Semma Pasi Logo" loading="lazy" />
         <Text ml={4} fontSize="lg" fontWeight="bold">
           Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
         </Text>
