@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import {
   Accordion,
@@ -23,24 +22,26 @@ import ShimmerMenu from "./ShimmerMenu";
 import MenuCard from "./MenuCard";
 
 import STAR from "../../static/assets/gold_star.png"
+import useResMenu from "../../static/useResMenu";
 
 const RestaurantMenu = () => {
   const { resId } = useParams();
   const { lat, lon } = useLocation().state;
-  const [resData, setResData] = useState(null);
-  useEffect(() => {
-    fetchResMenu();
-  }, []);
+  const resData = useResMenu(resId, lat, lon)
+  // const [resData, setResData] = useState(null);
+  // useEffect(() => {
+  //   fetchResMenu();
+  // }, []);
 
-  const fetchResMenu = async () => {
-    console.log("Fetching restaurant menu ...");
-    const data = await fetch(
-      `https://foodfire.onrender.com/api/menu?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lon}&&submitAction=ENTER&restaurantId=${resId}`
-    );
-    const json = await data?.json();
-    console.log(json);
-    setResData(json);
-  };
+  // const fetchResMenu = async () => {
+  //   console.log("Fetching restaurant menu ...");
+  //   const data = await fetch(
+  //     `https://foodfire.onrender.com/api/menu?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lon}&&submitAction=ENTER&restaurantId=${resId}`
+  //   );
+  //   const json = await data?.json();
+  //   console.log(json);
+  //   setResData(json);
+  // };
 
   if (resData === null) return <ShimmerMenu />;
   return (
