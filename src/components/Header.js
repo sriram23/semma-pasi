@@ -18,6 +18,7 @@ import { RepeatIcon } from "@chakra-ui/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import LOGO from "../../static/assets/SemmaPasi_logo.jpeg";
 import useOnlineStatus from "../../static/useOnlineStatus";
+import { FcApproval, FcHighPriority  } from "react-icons/fc";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
@@ -26,7 +27,6 @@ const Header = () => {
       ? localStorage.getItem("city")
       : "Fetching your location..."
   );
-  // const [status, setStatus] = useState(useOnlineStatus())
   const status = useOnlineStatus();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
@@ -104,14 +104,14 @@ const Header = () => {
           alt="Semma Pasi Logo"
           loading="lazy"
         />
-        <Flex align="center" direction="column">
-          <Flex>
-            <Text ml={4} fontSize="lg" fontWeight="bold">
+        <Flex justifyContent="center" alignItems="flex-start" m={2} direction="column">
+          <Flex alignItems="center">
+            <Text ml={2} fontSize="lg" fontWeight="bold">
               Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
             </Text>
             <RepeatIcon ml={2} onClick={handleFetchLocation}></RepeatIcon>
           </Flex>
-          <Text>{status ? "Your'e Online!" : "Your'e Offline"}</Text>
+          <Flex alignItems="center"><Box p={2}>{status?<FcApproval />:<FcHighPriority />}</Box><Text>{status?"You're online and connected!":"You're offline. Some features may be unavailable."}</Text></Flex>
         </Flex>
       </Flex>
       <Flex>
