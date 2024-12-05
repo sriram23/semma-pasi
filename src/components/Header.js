@@ -12,11 +12,12 @@ import {
   IconButton,
   Collapse,
   useDisclosure,
-  useMediaQuery
+  useMediaQuery,
 } from "@chakra-ui/react";
-import {RepeatIcon} from "@chakra-ui/icons"
+import { RepeatIcon } from "@chakra-ui/icons";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
 import LOGO from "../../static/assets/SemmaPasi_logo.jpeg";
+import useOnlineStatus from "../../static/useOnlineStatus";
 
 const Header = () => {
   const [btnName, setBtnName] = useState("Login");
@@ -25,13 +26,17 @@ const Header = () => {
       ? localStorage.getItem("city")
       : "Fetching your location..."
   );
+  // const [status, setStatus] = useState(useOnlineStatus())
+  const status = useOnlineStatus();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [isLargerThanMD] = useMediaQuery("(min-width: 48em)");
 
   useEffect(() => {
     const setCurrentCity = () => {
       const cityString = localStorage.getItem("city");
-      setCity(cityString !== "undefined" ? cityString : "Unable to fetch location");
+      setCity(
+        cityString !== "undefined" ? cityString : "Unable to fetch location"
+      );
     };
     window.addEventListener("storage", setCurrentCity);
     return () => {
@@ -40,60 +45,87 @@ const Header = () => {
   }, []);
 
   const handleFetchLocation = () => {
-    const event = new CustomEvent("fetchLocation")
+    const event = new CustomEvent("fetchLocation");
     document.dispatchEvent(event);
-  }
+  };
 
   const getNavItems = () => (
-    <List display="flex" alignItems="center" flexDirection={{base: "column", md: "row"}}>
-          <ListItem m={2}>
-            <Link as={RouterLink} to="/" fontSize="lg" fontWeight="bold">
-              Home
-            </Link>
-          </ListItem>
-          <ListItem m={2}>
-            <Link as={RouterLink} to="/about" fontSize="lg" fontWeight="bold">
-              About Us
-            </Link>
-          </ListItem>
-          <ListItem m={2}>
-            <Link as={RouterLink} to="/contact" fontSize="lg" fontWeight="bold">
-              Contact Us
-            </Link>
-          </ListItem>
-          <ListItem m={2} fontSize="lg" fontWeight="bold">
-            Cart
-          </ListItem>
-          <ListItem m={2}>
-            <Button
-              onClick={() => setBtnName(btnName === "Logout" ? "Login" : "Logout")}
-              colorScheme="teal"
-            >
-              {btnName}
-            </Button>
-          </ListItem>
-        </List>
-  )
+    <List
+      display="flex"
+      alignItems="center"
+      flexDirection={{ base: "column", md: "row" }}
+    >
+      <ListItem m={2}>
+        <Link as={RouterLink} to="/" fontSize="lg" fontWeight="bold">
+          Home
+        </Link>
+      </ListItem>
+      <ListItem m={2}>
+        <Link as={RouterLink} to="/about" fontSize="lg" fontWeight="bold">
+          About Us
+        </Link>
+      </ListItem>
+      <ListItem m={2}>
+        <Link as={RouterLink} to="/contact" fontSize="lg" fontWeight="bold">
+          Contact Us
+        </Link>
+      </ListItem>
+      <ListItem m={2} fontSize="lg" fontWeight="bold">
+        Cart
+      </ListItem>
+      <ListItem m={2}>
+        <Button
+          onClick={() => setBtnName(btnName === "Logout" ? "Login" : "Logout")}
+          colorScheme="teal"
+        >
+          {btnName}
+        </Button>
+      </ListItem>
+    </List>
+  );
 
   return (
-    <Flex as="header" p={4} justify="space-between" align="center" bg="gray.100" position="sticky"
-    top="0"
-    zIndex="1000">
+    <Flex
+      as="header"
+      p={4}
+      justify="space-between"
+      align="center"
+      bg="gray.100"
+      position="sticky"
+      top="0"
+      zIndex="1000"
+    >
       <Flex align="center">
-        <Image boxSize="100px" w={100} h={100} src={LOGO} alt="Semma Pasi Logo" loading="lazy" />
-        <Text ml={4} fontSize="lg" fontWeight="bold">
-          Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
-        </Text>
-        <RepeatIcon ml={2} onClick={handleFetchLocation}></RepeatIcon>
+        <Image
+          boxSize="100px"
+          w={100}
+          h={100}
+          src={LOGO}
+          alt="Semma Pasi Logo"
+          loading="lazy"
+        />
+        <Flex align="center" direction="column">
+          <Flex>
+            <Text ml={4} fontSize="lg" fontWeight="bold">
+              Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
+            </Text>
+            <RepeatIcon ml={2} onClick={handleFetchLocation}></RepeatIcon>
+          </Flex>
+          <Text>{status ? "Your'e Online!" : "Your'e Offline"}</Text>
+        </Flex>
       </Flex>
       <Flex>
-        {isLargerThanMD ? getNavItems() : (
+        {isLargerThanMD ? (
+          getNavItems()
+        ) : (
           <>
-            <IconButton icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
+            <IconButton
+              icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
               aria-label="Toggle Menu"
               onClick={isOpen ? onClose : onOpen}
-              display={{ md: "none" }} />
-              <Collapse in={isOpen} animateOpacity>
+              display={{ md: "none" }}
+            />
+            <Collapse in={isOpen} animateOpacity>
               <Box
                 display={{ md: "none" }}
                 pos="absolute"
@@ -109,7 +141,7 @@ const Header = () => {
                   {getNavItems()}
                 </Flex>
               </Box>
-              </Collapse>
+            </Collapse>
           </>
         )}
       </Flex>
