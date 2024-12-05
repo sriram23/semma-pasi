@@ -1,3 +1,12 @@
+[![Visits Badge](https://badges.pufler.dev/visits/sriram23/semma-pasi)](https://badges.pufler.dev)
+[![Updated Badge](https://badges.pufler.dev/updated/sriram23/semma-pasi)](https://badges.pufler.dev)
+[![Created Badge](https://badges.pufler.dev/created/sriram23/semma-pasi)](https://badges.pufler.dev)
+![GitHub contributors](https://img.shields.io/github/contributors/sriram23/semma-pasi?labelColor=black&color=%233fb911)
+![GitHub License](https://img.shields.io/github/license/sriram23/semma-pasi?labelColor=black&color=%233fb911)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fsemma-pasi.web.app&labelColor=black&color=%233fb911)
+![GitHub top language](https://img.shields.io/github/languages/top/sriram23/semma-pasi?color=%233fb911)
+
+
 # Semma Pasi
 
 Welcome to **Semma Pasi**, a modern food delivery web application built with React.js and Chakra UI, leveraging Swiggy APIs. This project is an experimental web app created for educational purposes. This README provides an overview of the project, installation instructions, usage guidelines, and other essential information.
@@ -95,6 +104,9 @@ We welcome contributions to **Semma Pasi**! To contribute, please follow these s
 6. **Create a Pull Request:**
 
    Go to the original repository and click "New Pull Request".
+
+## Contributors
+[![Contributors Display](https://badges.pufler.dev/contributors/sriram23/semma-pasi?size=50&padding=5&perRow=10&bots=true)](https://badges.pufler.dev)
 
 ## License
 
