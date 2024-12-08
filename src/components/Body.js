@@ -158,17 +158,20 @@ const Body = () => {
   }, [lat, lon]);
 
   const fetchLocation = () => {
-    if (!Object.keys(navigator.geolocation).length) {
-      setLat(-1);
-      setLon(-1);
-    } else {
+    console.log("Fetching location")
+    // if (!Object.keys(navigator.geolocation).length) {
+    //   setLat(-1);
+    //   setLon(-1);
+    // } else {
+      console.log("Geolocation")
       navigator.geolocation.getCurrentPosition((position) => {
+        console.log("Position: ", position)
         setLat(position.coords.latitude);
         setLon(position.coords.longitude);
         localStorage.setItem('lat', position.coords.latitude);
         localStorage.setItem('lon', position.coords.longitude);
       });
-    }
+    // }
   };
 
   const fetchData = async () => {

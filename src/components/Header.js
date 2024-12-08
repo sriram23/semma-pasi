@@ -107,11 +107,11 @@ const Header = () => {
         <Flex justifyContent="center" alignItems="flex-start" m={2} direction="column">
           <Flex alignItems="center">
             <Text ml={2} fontSize="lg" fontWeight="bold">
-              Location: {city?.charAt(0).toUpperCase() + city?.slice(1)}
+              📍{city?.charAt(0).toUpperCase() + city?.slice(1)}
             </Text>
             <RepeatIcon ml={2} onClick={handleFetchLocation}></RepeatIcon>
           </Flex>
-          <Flex alignItems="center"><Box p={2}>{status?<FcApproval />:<FcHighPriority />}</Box><Text>{status?"You're online and connected!":"You're offline. Some features may be unavailable."}</Text></Flex>
+          <Flex alignItems="center"><Box p={2}>{status?<FcApproval />:<FcHighPriority />}</Box><Text>{status?"You're online and connected! 🚀":"You're offline. Some features may be unavailable.👎"}</Text></Flex>
         </Flex>
       </Flex>
       <Flex>
