@@ -1,14 +1,19 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
 import Header from "./src/components/Header";
 import Body from "./src/components/Body";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import About from "./src/components/About";
-import Contact from "./src/components/Contact";
+// import About from "./src/components/About";
+// import Contact from "./src/components/Contact";
 import Error from "./src/components/Error";
 import RestaurantMenu from "./src/components/RestaurantMenu";
+// Lazy Loading
+const Grocery = lazy(() => import('./src/components/Grocery'))
+const  Contact = lazy(() => import('./src/components/Contact'))
+const About = lazy(() => import('./src/components/About'))
+// import Grocery from "./src/components/Grocery";
 
 
 /**
@@ -61,15 +66,19 @@ const appRouter = createBrowserRouter([
             },
             {
                 path: "/about",
-                element: <About/>
+                element: <Suspense fallback="Loading..."><About/></Suspense>
             },
             {
                 path: "/contact",
-                element: <Contact/>
+                element: <Suspense fallback="Loading..."><Contact/></Suspense>
             },
             {
                 path: "/restaurants/:resId",
                 element: <RestaurantMenu/>
+            },
+            {
+                path: "/grocery",
+                element: <Suspense fallback="Loading..."><Grocery/></Suspense>
             }
         ]
     },

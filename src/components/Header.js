@@ -61,6 +61,11 @@ const Header = () => {
         </Link>
       </ListItem>
       <ListItem m={2}>
+        <Link as={RouterLink} to="/grocery" fontSize="lg" fontWeight="bold">
+          Grocery
+        </Link>
+      </ListItem>
+      <ListItem m={2}>
         <Link as={RouterLink} to="/about" fontSize="lg" fontWeight="bold">
           About Us
         </Link>
