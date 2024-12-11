@@ -7,7 +7,7 @@ const shimmerAnimation = keyframes`
 
 const ShimmerMenu = () => {
   return (
-    <div>
+    <Box bg="#d8d4c5">
       <Flex justifyContent="center" alignItems="center">
         <Box
           width="100%"
@@ -33,7 +33,7 @@ const ShimmerMenu = () => {
             />
           </Box>
         ))}
-    </div>
+    </Box>
   );
 };
 

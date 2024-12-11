@@ -4,7 +4,7 @@ const RestaurantCard = ({ data, onCardClick }) => {
     return (
         <Box
             className="res-card"
-            bg="#f0f0f0"
+            bg="#cbb594"
             borderRadius="md"
             p={4}
             w="100%"
@@ -28,13 +28,13 @@ const RestaurantCard = ({ data, onCardClick }) => {
                     {data.info.name}
                 </Text>
             </Flex>
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize="sm">
                 {data.info.cuisines.join(", ")}
             </Text>
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize="sm">
                 {data.info.avgRating} Stars
             </Text>
-            <Text fontSize="sm" color="gray.500">
+            <Text fontSize="sm">
                 {data.info.sla.slaString}
             </Text>
         </Box>

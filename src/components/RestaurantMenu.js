@@ -45,7 +45,7 @@ const RestaurantMenu = () => {
 
   if (resData === null) return <ShimmerMenu />;
   return (
-    <div className="menu">
+    <Box className="menu" bg="#d8d4c5">
       <Heading as="h2" size="xl" noOfLines={1}>{resData?.data?.cards[0]?.card?.card?.text}</Heading>
       <Tabs>
         <TabList>
@@ -170,7 +170,7 @@ const RestaurantMenu = () => {
       </TabPanel>
       </TabPanels>
       </Tabs>
-    </div>
+    </Box>
   );
 };
 

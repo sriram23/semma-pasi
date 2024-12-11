@@ -95,7 +95,7 @@ const Header = () => {
       p={4}
       justify="space-between"
       align="center"
-      bg="gray.100"
+      bg="#cbb594"
       position="sticky"
       top="0"
       zIndex="1000"

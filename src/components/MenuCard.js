@@ -7,12 +7,13 @@ const MenuCard = ({ items }) => {
 
   return (
     <Box
-      borderBottom="1px solid black"
       m="1rem"
       p="1rem"
       display="flex"
       justifyContent="space-between"
       flexDirection={{ base: "column", md: "row" }}
+      bg="#cbb594"
+      borderRadius="md"
     >
       <Flex flexDirection="column" w={{ base: "100%", md: "70%" }}>
         <Flex alignItems="center" wrap="wrap">
@@ -50,6 +51,8 @@ const MenuCard = ({ items }) => {
             h="100%"
             objectFit="cover"
             borderRadius="md"
+            _hover={{ transform: "scale(1.1)" }}
+            transition="transform 0.2s"
           />
         )}
         {info?.inStock ? (

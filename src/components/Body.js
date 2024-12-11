@@ -244,7 +244,7 @@ const Body = () => {
     </Grid>
   )
   return (
-    <Box p={4}>
+    <Box p={4} bg="#d8d4c5">
       <Flex mb={4} direction={{ base: "column", md: "row" }} justify="space-between" align="center">
         <Flex mb={{ base: 4, md: 0 }} align="center">
           <Input
@@ -276,7 +276,7 @@ const Body = () => {
       </Flex>
 
       {!serviceAvailable && (
-        <Flex direction="column" align="center" justify="center">
+        <Flex direction="column" align="center" justify="center" bg="#d8d4c5">
           <Box maxW="30rem">
             <Image src={SERVICE_UNAVAILABLE} w={300} h={300} loading="lazy" alt="Service unavailable" />
           </Box>
