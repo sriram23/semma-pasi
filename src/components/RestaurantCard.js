@@ -31,12 +31,17 @@ const RestaurantCard = ({ data, onCardClick }) => {
             <Text fontSize="sm">
                 {data.info.cuisines.join(", ")}
             </Text>
-            <Text fontSize="sm">
-                {data.info.avgRating} Stars
+            <Flex alignItems="center">
+            <Box mx={2} bg={data.info.avgRating>4?'green.500':data.info.avgRating<2.9?'red.500':'yellow.500'} p={1} width="max-content" borderRadius="md">
+            <Text fontSize="sm" color="white">
+                {'\u2605'}
+                {data.info.avgRating}
             </Text>
+            </Box>
             <Text fontSize="sm">
                 {data.info.sla.slaString}
             </Text>
+            </Flex>
         </Box>
     );
 };

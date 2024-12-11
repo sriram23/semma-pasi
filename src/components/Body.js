@@ -189,7 +189,7 @@ const Body = () => {
       console.log("Data: " + JSON.stringify(contents));
       localStorage.setItem(
         "city",
-        contents?.data?.cards[11]?.card?.card?.citySlug
+        contents?.data?.cards[contents?.data?.cards.length-1]?.card?.card?.citySlug
       );
       window.dispatchEvent(new Event("storage"));
       if (contents?.data?.cards[0]?.card?.card?.id === "swiggy_not_present") {
@@ -245,7 +245,26 @@ const Body = () => {
   )
   return (
     <Box p={4} bg="#d8d4c5">
-      <Flex mb={4} direction={{ base: "column", md: "row" }} justify="space-between" align="center">
+      {!serviceAvailable && (
+        <Flex direction="column" align="center" justify="center" bg="#d8d4c5">
+          <Box maxW="30rem">
+            <Image src={SERVICE_UNAVAILABLE} w={300} h={300} loading="lazy" alt="Service unavailable" />
+          </Box>
+          <Text textAlign="center" mt={4}>
+            Our hunger-busting spices haven't reached your corner just yet!
+            We're working on expanding our delivery zone, so stay tuned for delicious updates.
+          </Text>
+        </Flex>
+      )}
+
+      {serviceAvailable && (
+        <Box>
+          {searchText.length === 0 && <Box mb={4}>
+            <Text fontSize="2xl" fontWeight="bold">{topRestaurantTitle}</Text>
+            {renderResCard(topRestaurants)}
+          </Box>}
+
+          <Flex mb={4} direction={{ base: "column", md: "row" }} justify="space-between" align="center">
         <Flex mb={{ base: 4, md: 0 }} align="center">
           <Input
             type="text"
@@ -274,26 +293,6 @@ const Body = () => {
           Top Rated Restaurants
         </Button>
       </Flex>
-
-      {!serviceAvailable && (
-        <Flex direction="column" align="center" justify="center" bg="#d8d4c5">
-          <Box maxW="30rem">
-            <Image src={SERVICE_UNAVAILABLE} w={300} h={300} loading="lazy" alt="Service unavailable" />
-          </Box>
-          <Text textAlign="center" mt={4}>
-            Our hunger-busting spices haven't reached your corner just yet!
-            We're working on expanding our delivery zone, so stay tuned for delicious updates.
-          </Text>
-        </Flex>
-      )}
-
-      {serviceAvailable && (
-        <Box>
-          {searchText.length === 0 && <Box mb={4}>
-            <Text fontSize="2xl" fontWeight="bold">{topRestaurantTitle}</Text>
-            {renderResCard(topRestaurants)}
-          </Box>}
-
           <Box>
             <Text fontSize="2xl" fontWeight="bold">{listOfRestaurantTitle}</Text>
             {renderResCard(filteredRestaurants)}
