@@ -231,7 +231,7 @@ const Body = () => {
   const renderResCard = (data) => (
     <Grid justifyContent={"center"} gap={4} templateColumns={{ base: "1fr", sm: "1fr", md: "repeat(3, 1fr)", lg: "repeat(4, 1fr)", xl:"repeat(5, 1fr)" }}>
     {data.map((res) => (
-      <Box display={"flex"} width="100%" justifyContent={"center"}>
+      <Box display={"flex"} width="100%" justifyContent={"center"} >
         <RestaurantCard
           onCardClick={() => {
             navigate("/restaurants/" + res.info.id, { state: { lat, lon } });
@@ -289,10 +289,10 @@ const Body = () => {
 
       {serviceAvailable && (
         <Box>
-          <Box mb={4}>
+          {searchText.length === 0 && <Box mb={4}>
             <Text fontSize="2xl" fontWeight="bold">{topRestaurantTitle}</Text>
             {renderResCard(topRestaurants)}
-          </Box>
+          </Box>}
 
           <Box>
             <Text fontSize="2xl" fontWeight="bold">{listOfRestaurantTitle}</Text>
