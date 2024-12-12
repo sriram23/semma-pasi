@@ -18,9 +18,9 @@ const Footer = () => {
                 <Box>
                     <Heading as="h3" my={2}>Social Links</Heading>
                     <Box display="flex" flexDir="column">
-                        <Link>Linkedin</Link>
-                        <Link>Github</Link>
-                        <Link>Hashnode</Link>
+                        <Link to="https://linkedin.com/in/imsriramb">Linkedin</Link>
+                        <Link to="https://github.com/sriram23">Github</Link>
+                        <Link to="https://sriram23.hashnode.dev">Hashnode</Link>
                     </Box>
                 </Box>
             </Flex>
