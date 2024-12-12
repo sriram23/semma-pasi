@@ -1,12 +1,12 @@
-import { Box, Heading } from "@chakra-ui/react"
+import { Box, Heading, Alert } from "@chakra-ui/react"
 import User from "./User"
 import UserClass from "./UserClass"
 
 const About = () => {
     return (
         <Box minH="100vh">
-            <Heading as="h2">About</Heading>
-            {/* <User name="Sriram" location="Coimbatore" contact="twitter.com/@imsriramb"/> */}
+            <Alert status="info">If you do not see any info here, probably the github API rate limit could have exceeded. Try after sometime</Alert>
+            <Heading textAlign="center" as="h2">About</Heading>
             <UserClass/>
         </Box>
     )

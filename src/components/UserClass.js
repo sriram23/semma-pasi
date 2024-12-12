@@ -1,6 +1,8 @@
 import { Button, Card, Heading, Image, Box, Flex, Text } from "@chakra-ui/react";
 import React from "react";
 import { Link } from "react-router-dom";
+
+import moment from "moment";
 class UserClass extends React.Component {
     constructor(props) {
         super(props);
@@ -60,17 +62,27 @@ class UserClass extends React.Component {
                 </Box>
                 <Box display="flex" flexDirection="column" alignItems="center" m={4}>
                     <Heading as="h3" fontSize="lg">Github Repos</Heading>
-                    <Box display="flex" flexWrap="wrap">
-                        {repos.map( repo => (
-                            <Card w={64} m={2}>
-                                <Text>{repo.name}</Text>
-                                <Text>{repo.description?.length > 99?repo.description?.slice(0,100)+"...":repo.description}</Text>
+                    <Box>
+                        {repos.map( async repo => { 
+                            const languages = await fetch(repo?.languages_url)
+                            return(
+                            repo?.visibility === "public" &&<Card m={4} p={4}>
+                                <Flex alignItems="center">
+                                    <Text fontSize="3xl">{repo.name}</Text>
+                                    <Text fontSize="xs" color="white" bg="gray.500" p={1} m={1} borderRadius="md">Public</Text>
+                                </Flex>
+                                <Link to={repo.html_url}><Text color="blue.400">{repo.full_name}</Text></Link>
+                                <Text>{repo.description}</Text>
+                                {repo.license && <Link to={repo.license?.url}><Text>⚖️ {repo.license?.name}</Text></Link>}
+                                {repo.homepage && <Link to={repo.homepage}><Text color="blue.400">{repo.homepage}</Text></Link>}
+                                <Text>{JSON.stringify(languages)}</Text>
                                 <Flex>
-                                    <Text>Created: {repo.created_at}</Text>
-                                    <Text>Updated: {repo.updated_at}</Text>
+                                    <Text>Updated: {moment(repo.updated_at).fromNow()}</Text>
+                                    &nbsp;| &nbsp;
+                                    <Text>Created: {moment(repo.created_at).fromNow()}</Text>
                                 </Flex>
                             </Card>
-                        ))}
+                        )})}
                     </Box>
                 </Box>
             </Box>
