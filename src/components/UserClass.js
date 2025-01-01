@@ -21,13 +21,23 @@ class UserClass extends React.Component {
         this.setState({
             user: json
         })
-        const repos = await fetch(json.repos_url+"?per_page=9&page=1&sort=pushed&direction=desc")
-        const repoJson = await repos.json();
+        const repo = await fetch(json.repos_url+"?per_page=9&page=1&sort=pushed&direction=desc")
+        const repoJson = await repo.json();
         console.log("Repo Json: " + JSON.stringify(repoJson))
         this.setState({
             repos: repoJson
         })
         console.log("State: ",this.state)
+    }
+
+    async getLanguages(url) {
+        try{
+            const res = await fetch(url)
+            const resJson = await res.json();
+            return resJson
+        } catch(err){
+            console.error("Failed to fetch languages:", err)
+        }
     }
     render() {
         const { name, location, login, avatar_url, bio, html_url, blog, twitter_username, followers, following, public_repos} = this.state.user;
@@ -62,27 +72,50 @@ class UserClass extends React.Component {
                 </Box>
                 <Box display="flex" flexDirection="column" alignItems="center" m={4}>
                     <Heading as="h3" fontSize="lg">Github Repos</Heading>
-                    <Box>
-                        {repos.map( async repo => { 
-                            const languages = await fetch(repo?.languages_url)
+                    <Box m={4} w="100%">
+                        {repos?.map(repo => {
+                            // fetch(repo?.languages_url).then((response) =>{ console.log("We got some response: "+ JSON.stringify(response.json()))}).catch((error) => { console.error("We've got some error! ",error) })
+                            const langs = getLanguages(repo?.languages_url)
                             return(
-                            repo?.visibility === "public" &&<Card m={4} p={4}>
-                                <Flex alignItems="center">
-                                    <Text fontSize="3xl">{repo.name}</Text>
-                                    <Text fontSize="xs" color="white" bg="gray.500" p={1} m={1} borderRadius="md">Public</Text>
-                                </Flex>
-                                <Link to={repo.html_url}><Text color="blue.400">{repo.full_name}</Text></Link>
-                                <Text>{repo.description}</Text>
-                                {repo.license && <Link to={repo.license?.url}><Text>⚖️ {repo.license?.name}</Text></Link>}
-                                {repo.homepage && <Link to={repo.homepage}><Text color="blue.400">{repo.homepage}</Text></Link>}
-                                <Text>{JSON.stringify(languages)}</Text>
-                                <Flex>
-                                    <Text>Updated: {moment(repo.updated_at).fromNow()}</Text>
-                                    &nbsp;| &nbsp;
-                                    <Text>Created: {moment(repo.created_at).fromNow()}</Text>
-                                </Flex>
-                            </Card>
+                                    repo?.visibility === "public" &&<Card key={repo.id} shadow="md" m={4} p={4}>
+                                        <Flex alignItems="center">
+                                            <Text fontSize="3xl">{repo.name}</Text>
+                                            <Text fontSize="xs" color="white" bg="gray.500" p={1} m={1} borderRadius="md">Public</Text>
+                                        </Flex>
+                                        <Link to={repo.html_url}><Text color="blue.400">{repo.full_name}</Text></Link>
+                                        <Text>{repo.description}</Text>
+                                        {repo.license && <Link to={repo.license?.url}><Text>⚖️ {repo.license?.name}</Text></Link>}
+                                        {repo.homepage && <Link to={repo.homepage}><Text color="blue.400">{repo.homepage}</Text></Link>}
+                                        {langs? (<Text>JSON.stringify(lang)</Text>): ""}
+                                        <Flex>
+                                            <Text>Updated: {moment(repo.updated_at).fromNow()}</Text>
+                                            &nbsp;| &nbsp;
+                                            <Text>Created: {moment(repo.created_at).fromNow()}</Text>
+                                        </Flex>
+                                    </Card>
                         )})}
+                        {/* {repos?.map( async repo => {  */}
+                            {/* console.log("Repo: " + repo) */}
+                            {/* // const languages = await fetch(repo?.languages_url) */}
+                            {/* // console.log("Languages: " + await JSON.stringify(languages)) */}
+                        {/* //     return( */}
+                        {/* //     repo?.visibility === "public" &&<Card m={4} p={4}> */}
+                        {/* //         <Text>{typeof repo}</Text> */}
+                        {/* //         {/* <Flex alignItems="center"> */}
+                        {/* //             <Text fontSize="3xl">{repo.name}</Text> */}
+                        {/* //             <Text fontSize="xs" color="white" bg="gray.500" p={1} m={1} borderRadius="md">Public</Text> */}
+                        {/* //         </Flex> */}
+                        {/* //         <Link to={repo.html_url}><Text color="blue.400">{repo.full_name}</Text></Link> */}
+                        {/* //         <Text>{repo.description}</Text> */}
+                        {/* //         {repo.license && <Link to={repo.license?.url}><Text>⚖️ {repo.license?.name}</Text></Link>} */}
+                        {/* //         {repo.homepage && <Link to={repo.homepage}><Text color="blue.400">{repo.homepage}</Text></Link>} */}
+                        {/* //         <Flex> */}
+                        {/* //             <Text>Updated: {moment(repo.updated_at).fromNow()}</Text> */}
+                        {/* //             &nbsp;| &nbsp; */}
+                        {/* //             <Text>Created: {moment(repo.created_at).fromNow()}</Text> */}
+                        {/* //         </Flex> */}
+                        {/* //     </Card> */}
+                        {/* // )*/ }
                     </Box>
                 </Box>
             </Box>
