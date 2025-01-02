@@ -34,7 +34,7 @@ class UserClass extends React.Component {
         try{
             const res = await fetch(url)
             const resJson = await res.json();
-            return resJson
+            return await resJson
         } catch(err){
             console.error("Failed to fetch languages:", err)
         }
@@ -74,8 +74,17 @@ class UserClass extends React.Component {
                     <Heading as="h3" fontSize="lg">Github Repos</Heading>
                     <Box m={4} w="100%">
                         {repos?.map(repo => {
-                            // fetch(repo?.languages_url).then((response) =>{ console.log("We got some response: "+ JSON.stringify(response.json()))}).catch((error) => { console.error("We've got some error! ",error) })
-                            const langs = getLanguages(repo?.languages_url)
+                            // const langs = new Promise((resolve, reject) => {
+                            //     try{
+                            //         this.getLanguages(repo?.languages_url)
+                            //         resolve()
+                            //     }catch(err){
+                            //         console.error("Unable to get languages: " + err)
+                            //         reject()
+                            //     }
+                            // })
+                            // // console.log("Langs: ", langs.then(lang => lang))
+                            // langs.then(lang => console.log(lang))
                             return(
                                     repo?.visibility === "public" &&<Card key={repo.id} shadow="md" m={4} p={4}>
                                         <Flex alignItems="center">
@@ -86,7 +95,7 @@ class UserClass extends React.Component {
                                         <Text>{repo.description}</Text>
                                         {repo.license && <Link to={repo.license?.url}><Text>⚖️ {repo.license?.name}</Text></Link>}
                                         {repo.homepage && <Link to={repo.homepage}><Text color="blue.400">{repo.homepage}</Text></Link>}
-                                        {langs? (<Text>JSON.stringify(lang)</Text>): ""}
+                                        {/* {langs? (<Text>{JSON.stringify(langs)}</Text>): ""} */}
                                         <Flex>
                                             <Text>Updated: {moment(repo.updated_at).fromNow()}</Text>
                                             &nbsp;| &nbsp;
