@@ -25,10 +25,10 @@ const MenuCard = ({ items }) => {
             {info?.price && "₹"+ info?.price / 100}
           </Text>
           {info?.ratings?.aggregatedRating?.rating && (
-            <Text m="1rem">
-              {info?.ratings?.aggregatedRating?.rating} (
-              {info?.ratings?.aggregatedRating?.ratingCount})
-            </Text>
+            <Box display="flex" m="1rem">
+              <Text m={1} color={info?.ratings?.aggregatedRating?.rating > 4 ? "green.600" : "yellow.600"}>{'\u2605'}{info?.ratings?.aggregatedRating?.rating}</Text>
+              <Text m={1}>({info?.ratings?.aggregatedRating?.ratingCount})</Text>
+            </Box>
           )}
         </Flex>
         <Text isTruncated>{info?.description}</Text>

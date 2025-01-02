@@ -73,12 +73,12 @@ const RestaurantMenu = () => {
       </div>
       <div>
         Deals for you
-        <Flex>
+        <Flex direction={{base: "column", md: "row"}}>
         {resData?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers.map(
           (offer) => (
             <Card m={3} _hover={{background: "gray.100"}} transition="background-color 0.5s ease">
               <CardBody>
-                <Flex >
+                <Flex>
                   <Image w={50} h={50} m={2} src={`https://media-assets.swiggy.com/${offer?.info?.offerLogo}`}></Image>
                   <Flex direction="column">
                     <Text fontSize="xl" fontWeight="bold">{offer?.info?.header}</Text>

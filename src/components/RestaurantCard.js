@@ -42,6 +42,9 @@ const RestaurantCard = ({ data, onCardClick }) => {
                 {data.info.sla.slaString}
             </Text>
             </Flex>
+            <Text fontSize="md">
+                    {data.info.locality}, {data.info.areaName}
+                </Text>
         </Box>
     );
 };
